@@ -1,7 +1,8 @@
+//axios.js
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://digital-ration-backend.onrender.com",
+  baseURL: "https://digital-ration-backend.onrender.com/api",
 });
 
 axiosInstance.interceptors.request.use(
@@ -14,7 +15,7 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default axiosInstance;
