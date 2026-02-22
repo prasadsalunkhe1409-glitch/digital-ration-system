@@ -7,22 +7,43 @@ const bcrypt = require("bcryptjs");
 
 
 // ===============================
-// VILLAGER DASHBOARD
+// VILLAGER DASHBOARD (FIXED)
 // ===============================
 exports.getVillagerDashboard = async (req, res) => {
   try {
 
     const villagerId = req.user._id;
 
+    // Find ration card
     const rationCard = await RationCard.findOne({
       user: villagerId
     })
     .populate("dealer", "name email")
     .populate("user", "name email");
 
+    if (!rationCard) {
+      return res.status(404).json({
+        success: false,
+        message: "Ration card not found"
+      });
+    }
+
+    // Find distributions
+    const distributions = await Distribution.find({
+      rationCard: rationCard._id
+    })
+    .populate("dealer", "name email")
+    .sort({ createdAt: -1 });
+
     res.status(200).json({
       success: true,
-      rationCard
+
+      rationCard,
+
+      totalDistributions: distributions.length,
+
+      history: distributions
+
     });
 
   } catch (error) {
@@ -36,8 +57,6 @@ exports.getVillagerDashboard = async (req, res) => {
 
   }
 };
-
-
 
 // ===============================
 // VILLAGER RATION HISTORY
