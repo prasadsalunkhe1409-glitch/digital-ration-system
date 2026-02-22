@@ -1,4 +1,3 @@
-//axios.js
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -15,7 +14,7 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;
