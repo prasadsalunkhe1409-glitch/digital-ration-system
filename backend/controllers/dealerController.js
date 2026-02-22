@@ -11,62 +11,148 @@ const bcrypt = require("bcryptjs");
 // ===============================
 // DEALER DASHBOARD
 // ===============================
-exports.getDealerDashboard = async (req, res) => {
+// exports.getDealerDashboard = async (req, res) => {
+//   try {
+//     const dealerId = req.user._id;
+
+//     const dealer = await User.findById(dealerId).select("-password");
+
+//     // Total distributions
+//     const totalDistributions = await Distribution.countDocuments({
+//       dealer: dealerId,
+//     });
+
+//     // Today's distributions
+//     const today = new Date();
+//     today.setHours(0, 0, 0, 0);
+
+//     const todayDistributions = await Distribution.countDocuments({
+//       dealer: dealerId,
+//       createdAt: { $gte: today },
+//     });
+
+//     // Current month distributions
+//     const currentMonth = new Date().getMonth() + 1;
+//     const currentYear = new Date().getFullYear();
+
+//     const monthlyDistributions = await Distribution.countDocuments({
+//       dealer: dealerId,
+//       month: currentMonth,
+//       year: currentYear,
+//     });
+
+//     // Unique villagers served
+//     const villagersServed = await Distribution.distinct("rationCard", {
+//       dealer: dealerId,
+//     });
+
+//     // Stock summary
+//     const stock = await RationItem.find().select("name stock unit");
+
+//     res.status(200).json({
+//       success: true,
+//       dealer,
+//       stats: {
+//         totalDistributions,
+//         todayDistributions,
+//         monthlyDistributions,
+//         villagersServed: villagersServed.length,
+//       },
+//       stock,
+//     });
+//   } catch (error) {
+//     console.error("Dealer Dashboard Error:", error);
+
+//     res.status(500).json({
+//       success: false,
+//       message: "Server error",
+//     });
+//   }
+// };
+exports.distributeRation = async (req, res) => {
   try {
-    const dealerId = req.user._id;
 
-    const dealer = await User.findById(dealerId).select("-password");
+    const { cardNumber, month, year } = req.body;
 
-    // Total distributions
-    const totalDistributions = await Distribution.countDocuments({
-      dealer: dealerId,
+    if (!cardNumber || !month || !year) {
+      return res.status(400).json({
+        success: false,
+        message: "Card number, month and year required",
+      });
+    }
+
+    const rationCard = await RationCard.findOne({
+      cardNumber,
+      dealer: req.user._id,
     });
 
-    // Today's distributions
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    if (!rationCard) {
+      return res.status(404).json({
+        success: false,
+        message: "Ration card not found",
+      });
+    }
 
-    const todayDistributions = await Distribution.countDocuments({
-      dealer: dealerId,
-      createdAt: { $gte: today },
+    // ✅ CHECK IF ALREADY DISTRIBUTED
+    const existing = await Distribution.findOne({
+      rationCard: rationCard._id,
+      month: parseInt(month),
+      year: parseInt(year),
     });
 
-    // Current month distributions
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear();
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: "Ration already distributed for this month",
+      });
+    }
 
-    const monthlyDistributions = await Distribution.countDocuments({
-      dealer: dealerId,
-      month: currentMonth,
-      year: currentYear,
+    const rice = await RationItem.findOne({ name: "Rice" });
+    const wheat = await RationItem.findOne({ name: "Wheat" });
+    const sugar = await RationItem.findOne({ name: "Sugar" });
+
+    const distribution = await Distribution.create({
+
+      rationCard: rationCard._id,
+
+      dealer: req.user._id,
+
+      month: parseInt(month),
+
+      year: parseInt(year),
+
+      items: [
+        {
+          item: rice._id,
+          quantity: rationCard.monthlyQuota.rice,
+        },
+        {
+          item: wheat._id,
+          quantity: rationCard.monthlyQuota.wheat,
+        },
+        {
+          item: sugar._id,
+          quantity: rationCard.monthlyQuota.sugar,
+        },
+      ],
+
     });
 
-    // Unique villagers served
-    const villagersServed = await Distribution.distinct("rationCard", {
-      dealer: dealerId,
-    });
-
-    // Stock summary
-    const stock = await RationItem.find().select("name stock unit");
-
-    res.status(200).json({
+    res.status(201).json({
       success: true,
-      dealer,
-      stats: {
-        totalDistributions,
-        todayDistributions,
-        monthlyDistributions,
-        villagersServed: villagersServed.length,
-      },
-      stock,
+      message: "Ration distributed successfully",
+      distribution,
     });
+
   } catch (error) {
-    console.error("Dealer Dashboard Error:", error);
+
+    console.error("Distribution Error:", error);
 
     res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Distribution failed",
     });
+
   }
 };
 
