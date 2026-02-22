@@ -18,7 +18,7 @@ const LandingPage = () => {
 
       <div className="landing-container">
         <header className="landing-header">
-          <h1>Digital Ration Distribution System</h1>
+          <h1>Digital Ration Distribution System Maharashtra</h1>
           <p>Maharashtra Public Distribution Portal</p>
 
           <button className="login-btn" onClick={() => navigate("/login")}>

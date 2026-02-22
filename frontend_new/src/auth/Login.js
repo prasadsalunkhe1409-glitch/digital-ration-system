@@ -85,7 +85,7 @@ const Login = () => {
         {/* Right Login Area */}
         <div className="login-content">
           <div className="premium-header">
-            <h1>Digital Ration System Maharashtra</h1>
+            <h1>Digital Ration Distribution System Maharashtra</h1>
             <p>🏛️ Government Public Distribution Portal, Maharashtra State</p>
           </div>
 
