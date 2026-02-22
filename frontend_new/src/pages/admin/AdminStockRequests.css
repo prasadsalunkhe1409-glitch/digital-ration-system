@@ -1,0 +1,61 @@
+/* src/pages/admin/AdminStockRequests.css */
+
+.admin-stock-container {
+  padding: 30px;
+}
+
+.admin-stock-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.admin-stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-stock-table th {
+  background-color: #1e293b;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.admin-stock-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-stock-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+.admin-stock-btn {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-stock-approve {
+  background-color: #16a34a;
+  color: white;
+}
+
+.admin-stock-reject {
+  background-color: #dc2626;
+  color: white;
+}
+
+.admin-stock-approve:hover {
+  background-color: #15803d;
+}
+
+.admin-stock-reject:hover {
+  background-color: #b91c1c;
+}

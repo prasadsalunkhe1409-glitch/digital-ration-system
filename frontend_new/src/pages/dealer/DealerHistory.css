@@ -1,0 +1,58 @@
+.history-container {
+  padding: 20px;
+}
+
+.history-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.history-table th {
+  background-color: #334155;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.history-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.history-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+.history-empty {
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.delete-btn {
+
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+
+}
+
+.delete-btn:hover {
+
+  background-color: #c0392b;
+
+}
+

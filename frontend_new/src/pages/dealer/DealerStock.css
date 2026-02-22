@@ -1,0 +1,42 @@
+.stock-container {
+  padding: 20px;
+}
+
+.stock-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stock-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.stock-card:hover {
+  transform: translateY(-5px);
+}
+
+.stock-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stock-quantity {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.stock-low {
+  color: red;
+  font-weight: bold;
+}

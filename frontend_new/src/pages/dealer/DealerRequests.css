@@ -1,0 +1,70 @@
+.requests-container {
+  padding: 20px;
+}
+
+.requests-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.request-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.request-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.request-button {
+  background: #1e293b;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.request-button:hover {
+  background: #0f172a;
+}
+
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.request-table th {
+  background: #334155;
+  color: white;
+  padding: 12px;
+}
+
+.request-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-approved {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}

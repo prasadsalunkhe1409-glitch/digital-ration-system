@@ -1,0 +1,90 @@
+/* Layout */
+.yearly-container {
+  display: flex;
+}
+
+.yearly-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* Title */
+.yearly-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+/* Filter */
+.yearly-filter {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.yearly-filter input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.yearly-filter input:focus {
+  border-color: #1e293b;
+}
+
+/* Button */
+.yearly-btn {
+  padding: 8px 16px;
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.yearly-btn:hover {
+  background-color: #334155;
+}
+
+/* Total Count */
+.yearly-total {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1e293b;
+}
+
+/* Table */
+.yearly-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.yearly-table thead {
+  background-color: #1e293b;
+  color: white;
+}
+
+.yearly-table th,
+.yearly-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.yearly-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.yearly-table tbody tr:hover {
+  background-color: #f8fafc;
+}

@@ -1,0 +1,29 @@
+.ration-card {
+
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 10px;
+
+  width: 400px;
+
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+  margin-top: 20px;
+
+}
+
+.ration-card p {
+
+  font-size: 16px;
+
+  margin: 8px 0;
+
+}
+
+.ration-card h3 {
+
+  margin-top: 15px;
+
+}

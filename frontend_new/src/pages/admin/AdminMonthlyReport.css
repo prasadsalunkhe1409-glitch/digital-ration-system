@@ -1,0 +1,90 @@
+/* Page Layout */
+.report-container {
+  display: flex;
+}
+
+.report-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* Title */
+.report-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+/* Filter Section */
+.filter-section {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-section input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-section input:focus {
+  border-color: #1e293b;
+}
+
+/* Fetch Button */
+.fetch-btn {
+  padding: 8px 16px;
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.fetch-btn:hover {
+  background-color: #334155;
+}
+
+/* Total Distributions */
+.total-count {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1e293b;
+}
+
+/* Table Styling */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.report-table thead {
+  background-color: #1e293b;
+  color: white;
+}
+
+.report-table th,
+.report-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.report-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.report-table tbody tr:hover {
+  background-color: #f8fafc;
+}
