@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axios";
 import Sidebar from "../../layout/Sidebar";
 import "../../styles/dealer.css";
 import "./DealerStock.css";
@@ -7,21 +7,21 @@ import Footer from "../../components/Footer";
 
 const DealerStock = () => {
   const [stock, setStock] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
+  // ===============================
+  // Fetch Dealer Stock
+  // ===============================
   const fetchStock = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const res = await api.get("/dealer/stock");
 
-      const res = await axios.get("http://localhost:5000/api/dealer/stock", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setStock(res.data.stock);
+      setStock(res.data.stock || []);
     } catch (error) {
       console.error("Stock fetch error:", error);
+
+      alert("Failed to load stock");
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,8 @@ const DealerStock = () => {
           </div>
         )}
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };

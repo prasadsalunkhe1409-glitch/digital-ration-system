@@ -1,30 +1,27 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axios";
 import Sidebar from "../../layout/Sidebar";
 import Footer from "../../components/Footer";
 import "./DealerVillagers.css";
 
 const DealerVillagers = () => {
   const [villagers, setVillagers] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
+  // ===============================
+  // Fetch assigned villagers
+  // ===============================
   useEffect(() => {
     const fetchVillagers = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get(
-          "http://localhost:5000/api/dealer/villagers",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
+        const response = await api.get("/dealer/villagers");
 
         setVillagers(response.data.villagers || []);
       } catch (error) {
         console.error("Error fetching villagers:", error);
+
+        alert("Failed to load villagers");
       } finally {
         setLoading(false);
       }
@@ -33,6 +30,9 @@ const DealerVillagers = () => {
     fetchVillagers();
   }, []);
 
+  // ===============================
+  // Category Badge
+  // ===============================
   const getCategoryBadge = (category) => {
     switch (category) {
       case "BPL":
@@ -51,10 +51,8 @@ const DealerVillagers = () => {
 
   return (
     <div className="layout">
-      {/* Sidebar */}
       <Sidebar role="dealer" />
 
-      {/* Main Content */}
       <div className="content">
         <div className="dealer-villagers-container">
           <div className="dealer-card">
@@ -87,9 +85,9 @@ const DealerVillagers = () => {
                       <tr key={v._id}>
                         <td>{v.cardNumber}</td>
 
-                        <td>{v.user?.name}</td>
+                        <td>{v.user?.name || "N/A"}</td>
 
-                        <td>{v.user?.email}</td>
+                        <td>{v.user?.email || "N/A"}</td>
 
                         <td>
                           <span className={getCategoryBadge(v.category)}>
@@ -97,11 +95,11 @@ const DealerVillagers = () => {
                           </span>
                         </td>
 
-                        <td>{v.monthlyQuota?.rice}</td>
+                        <td>{v.monthlyQuota?.rice || 0}</td>
 
-                        <td>{v.monthlyQuota?.wheat}</td>
+                        <td>{v.monthlyQuota?.wheat || 0}</td>
 
-                        <td>{v.monthlyQuota?.sugar}</td>
+                        <td>{v.monthlyQuota?.sugar || 0}</td>
 
                         <td>
                           <button className="distribute-btn">Distribute</button>
@@ -115,6 +113,7 @@ const DealerVillagers = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );

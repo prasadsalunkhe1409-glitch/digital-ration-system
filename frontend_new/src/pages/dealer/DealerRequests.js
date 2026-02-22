@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axios";
 import Sidebar from "../../layout/Sidebar";
 import "../../styles/dealer.css";
 import "./DealerRequests.css";
@@ -15,22 +15,22 @@ const DealerRequests = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [fetchLoading, setFetchLoading] = useState(true);
+
   // ===============================
   // Fetch existing requests
   // ===============================
   const fetchRequests = async () => {
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get("http://localhost:5000/api/dealer/requests", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await api.get("/dealer/requests");
 
       setRequests(res.data.requests || []);
     } catch (error) {
       console.error("Fetch Requests Error:", error);
+
+      alert("Failed to load requests");
+    } finally {
+      setFetchLoading(false);
     }
   };
 
@@ -57,13 +57,7 @@ const DealerRequests = () => {
     try {
       setLoading(true);
 
-      const token = localStorage.getItem("token");
-
-      await axios.post("http://localhost:5000/api/dealer/requests", form, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.post("/dealer/requests", form);
 
       alert("Request sent successfully");
 
@@ -143,42 +137,47 @@ const DealerRequests = () => {
         <div className="table-card">
           <h3>My Requests</h3>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {requests.length === 0 ? (
+          {fetchLoading ? (
+            <p>Loading requests...</p>
+          ) : (
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="4">No requests found</td>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                  <th>Date</th>
                 </tr>
-              ) : (
-                requests.map((req) => (
-                  <tr key={req._id}>
-                    <td>{req.itemName}</td>
+              </thead>
 
-                    <td>{req.quantity}</td>
-
-                    <td>
-                      <span className={getStatusBadge(req.status)}>
-                        {req.status}
-                      </span>
-                    </td>
-
-                    <td>{new Date(req.createdAt).toLocaleDateString()}</td>
+              <tbody>
+                {requests.length === 0 ? (
+                  <tr>
+                    <td colSpan="4">No requests found</td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  requests.map((req) => (
+                    <tr key={req._id}>
+                      <td>{req.itemName}</td>
+
+                      <td>{req.quantity}</td>
+
+                      <td>
+                        <span className={getStatusBadge(req.status)}>
+                          {req.status}
+                        </span>
+                      </td>
+
+                      <td>{new Date(req.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
+
       <Footer />
     </div>
   );

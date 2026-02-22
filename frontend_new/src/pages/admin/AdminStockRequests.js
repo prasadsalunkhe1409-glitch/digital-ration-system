@@ -1,22 +1,14 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../layout/Sidebar";
 import Footer from "../../components/Footer";
-import axios from "axios";
+import api from "../../utils/axios";
 import "./AdminStockRequests.css";
 
 const AdminStockRequests = () => {
   const [requests, setRequests] = useState([]);
 
-  const token = localStorage.getItem("token");
-
   const fetchRequests = async () => {
-    const res = await axios.get(
-      "http://localhost:5000/api/admin/stock-requests",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-
+    const res = await api.get("/admin/stock-requests");
     setRequests(res.data.requests);
   };
 
@@ -25,22 +17,12 @@ const AdminStockRequests = () => {
   }, []);
 
   const approve = async (id) => {
-    await axios.put(
-      `http://localhost:5000/api/admin/stock-requests/${id}/approve`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
-
+    await api.put(`/admin/stock-requests/${id}/approve`);
     fetchRequests();
   };
 
   const reject = async (id) => {
-    await axios.put(
-      `http://localhost:5000/api/admin/stock-requests/${id}/reject`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
-
+    await api.put(`/admin/stock-requests/${id}/reject`);
     fetchRequests();
   };
 
@@ -66,11 +48,8 @@ const AdminStockRequests = () => {
             {requests.map((req) => (
               <tr key={req._id}>
                 <td>{req.dealer?.name}</td>
-
                 <td>{req.itemName}</td>
-
                 <td>{req.quantity}</td>
-
                 <td className={req.status.toLowerCase()}>{req.status}</td>
 
                 <td>
@@ -97,6 +76,7 @@ const AdminStockRequests = () => {
           </tbody>
         </table>
       </div>
+
       <Footer />
     </div>
   );
